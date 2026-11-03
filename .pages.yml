@@ -2,6 +2,7 @@
 media:
   input: eurowork-cms/img
   output: /img
+  extensions: [jpg, jpeg, png, webp, gif, svg, avif, JPG, JPEG, PNG, WEBP, GIF, HEIC, heic]
 
 content:
   - name: sito
