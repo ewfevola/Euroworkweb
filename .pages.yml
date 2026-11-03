@@ -1,0 +1,178 @@
+# Configurazione del pannello Pages CMS (app.pagescms.org)
+media:
+  input: eurowork-cms/img
+  output: /img
+
+content:
+  - name: sito
+    label: Contenuti del sito
+    type: file
+    path: eurowork-cms/contenuti/sito.json
+    fields:
+      - name: apertura
+        label: Apertura (parte alta del sito)
+        type: object
+        fields:
+          - { name: etichetta, label: Etichetta piccola, type: string }
+          - { name: titolo, label: Titolo grande, type: string }
+          - { name: testo, label: Testo sotto il titolo, type: text }
+          - { name: foto, label: Foto grande, type: image }
+          - { name: descrizione_foto, label: Descrizione della foto (per chi non vede), type: string }
+          - { name: badge_alto_titolo, label: Riquadro in alto - titolo, type: string }
+          - { name: badge_alto_testo, label: Riquadro in alto - testo, type: string }
+          - { name: badge_basso_titolo, label: Riquadro in basso - titolo, type: string }
+          - { name: badge_basso_testo, label: Riquadro in basso - testo, type: string }
+
+      - name: numeri
+        label: Numeri sotto l'apertura
+        type: object
+        list: true
+        fields:
+          - { name: valore, label: Numero o parola grande, type: string }
+          - { name: descrizione, label: Descrizione, type: string }
+
+      - name: servizi
+        label: Servizi
+        type: object
+        fields:
+          - { name: titolo, label: Titolo sezione, type: string }
+          - { name: testo, label: Testo introduttivo, type: text }
+          - name: elenco
+            label: Riquadri dei servizi
+            type: object
+            list: true
+            fields:
+              - name: icona
+                label: Icona
+                type: select
+                options:
+                  values: [barriere, segnaletica, fotovoltaico, antirumore, strade, guardiania, edilizia, mezzi]
+              - { name: titolo, label: Titolo, type: string }
+              - { name: testo, label: Testo, type: text }
+              - { name: in_evidenza, label: Riquadro rosso in evidenza, type: boolean }
+          - name: altri
+            label: Altri servizi (tendine)
+            type: object
+            list: true
+            fields:
+              - { name: titolo, label: Titolo tendina, type: string }
+              - { name: voci, label: Voci, type: string, list: true }
+
+      - name: chi_siamo
+        label: Chi siamo
+        type: object
+        fields:
+          - { name: titolo, label: Titolo, type: string }
+          - { name: paragrafi, label: Paragrafi, type: text, list: true }
+          - name: persone
+            label: Persone
+            type: object
+            list: true
+            fields:
+              - { name: nome, label: Nome, type: string }
+              - { name: ruolo, label: Ruolo, type: string }
+          - name: tappe
+            label: Tappe della storia
+            type: object
+            list: true
+            fields:
+              - { name: sigla, label: Sigla nel cerchio (es. '13), type: string }
+              - { name: anno, label: Anno, type: string }
+              - { name: titolo, label: Titolo, type: string }
+              - { name: testo, label: Testo, type: text }
+              - { name: in_evidenza, label: Tappa in rosso, type: boolean }
+
+      - name: esperienza
+        label: Esperienza
+        type: object
+        fields:
+          - { name: titolo, label: Titolo, type: string }
+          - { name: testo, label: Testo, type: text }
+          - { name: clienti_titolo, label: Frase sopra i committenti, type: string }
+          - { name: clienti, label: Committenti, type: string, list: true }
+          - { name: premio_titolo, label: Riconoscimento - titolo, type: string }
+          - { name: premio_testo, label: Riconoscimento - testo, type: string }
+          - name: tratte
+            label: Tratte stradali
+            type: object
+            list: true
+            fields:
+              - { name: nome, label: Tratta, type: string }
+              - { name: valore, label: Km o sigla, type: string }
+              - { name: barra, label: Lunghezza barra (0-100; 0 = nessuna barra), type: number }
+
+      - name: lavori
+        label: Lavori
+        type: object
+        fields:
+          - { name: titolo, label: Titolo sezione, type: string }
+          - name: elenco
+            label: Riquadri dei lavori
+            type: object
+            list: true
+            fields:
+              - { name: foto, label: Foto, type: image }
+              - { name: titolo, label: Scritta sotto la foto, type: string }
+              - name: inquadratura
+                label: Parte della foto da mostrare
+                type: select
+                options:
+                  values: [alto, centro, basso]
+
+      - name: galleria
+        label: Galleria (slideshow)
+        type: object
+        fields:
+          - { name: titolo, label: Titolo sezione, type: string }
+          - { name: testo, label: Testo sotto il titolo, type: text }
+          - { name: scorrimento_automatico, label: Scorrimento automatico, type: boolean }
+          - name: foto
+            label: Foto
+            type: object
+            list: true
+            fields:
+              - { name: immagine, label: Foto, type: image }
+              - { name: didascalia, label: Didascalia, type: string }
+
+      - name: qualificazioni
+        label: Qualificazioni
+        type: object
+        fields:
+          - { name: titolo, label: Titolo sezione, type: string }
+          - name: elenco
+            label: Qualificazioni
+            type: object
+            list: true
+            fields:
+              - { name: titolo, label: Nome (es. SOA OS12-A), type: string }
+              - { name: testo, label: Descrizione, type: string }
+
+      - name: contatti
+        label: Contatti
+        type: object
+        fields:
+          - { name: titolo_riquadro, label: Riquadro nero - titolo, type: string }
+          - { name: testo_riquadro, label: Riquadro nero - testo, type: text }
+          - { name: indirizzo, label: Indirizzo, type: string }
+          - { name: cap_citta, label: CAP e città, type: string }
+          - { name: telefono, label: Telefono, type: string }
+          - { name: cellulare, label: Cellulare, type: string }
+          - { name: email, label: Email, type: string }
+          - { name: pec, label: PEC (lascia vuoto se non c'è), type: string }
+          - { name: orari, label: Orari (lascia vuoto per nasconderli), type: text }
+
+      - name: dati_societari
+        label: Dati societari (piè di pagina)
+        type: object
+        fields:
+          - { name: ragione_sociale, label: Ragione sociale, type: string }
+          - { name: piva_cf, label: P.IVA e C.F., type: string }
+          - { name: rea, label: REA, type: string }
+          - { name: camera_commercio, label: Camera di commercio, type: string }
+
+      - name: seo
+        label: Google (titolo e descrizione)
+        type: object
+        fields:
+          - { name: titolo, label: Titolo nella scheda e su Google, type: string }
+          - { name: descrizione, label: Descrizione su Google, type: text }
