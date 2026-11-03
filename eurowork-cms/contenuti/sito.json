@@ -244,7 +244,9 @@
         "immagine": "img/galleria-4.jpg",
         "didascalia": "Segnaletica e barriere lungo la strada"
       },
-      {}
+      {
+        "immagine": "/img/3.jpg"
+      }
     ]
   },
   "qualificazioni": {
