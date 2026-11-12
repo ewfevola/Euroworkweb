@@ -239,8 +239,14 @@
     "scorrimento_automatico": true,
     "foto": [
       {
+        "immagine": "/img/WhatsApp Image 2026-11-12 at 17.48.29 (1)-1.jpeg"
+      },
+      {
         "immagine": "img/galleria-1.jpg",
         "didascalia": "Parco fotovoltaico al tramonto"
+      },
+      {
+        "immagine": "/img/PHOTO-2025-09-05-22-50-48.jpg"
       },
       {
         "immagine": "img/galleria-2.jpg",
@@ -256,6 +262,23 @@
       },
       {
         "immagine": "/img/3.jpg"
+      },
+      {
+        "immagine": "/img/28dc3594-2ec4-4805-8a73-c58433e8bd81.jpg"
+      },
+      {
+        "immagine": "/img/enna 4 Raffaele.jpg"
+      },
+      {
+        "immagine": "/img/IMG_3050.jpg"
+      },
+      {},
+      {},
+      {
+        "immagine": "/img/WhatsApp Image 2026-11-12 at 17.48.28 (1)-1.jpeg"
+      },
+      {
+        "immagine": "/img/PHOTO-2025-07-28-11-41-36.jpg"
       }
     ]
   },
