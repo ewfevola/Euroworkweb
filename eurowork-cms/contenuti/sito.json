@@ -254,19 +254,7 @@
     "elenco": [
       {
         "titolo": "SOA OS12-A",
-        "testo": "Barriere stradali di sicurezza, classifica [X]"
-      },
-      {
-        "titolo": "SOA OS10",
-        "testo": "Segnaletica stradale non luminosa, classifica [X]"
-      },
-      {
-        "titolo": "SOA OS34",
-        "testo": "Sistemi antirumore, classifica [X]"
-      },
-      {
-        "titolo": "ISO 9001",
-        "testo": "Sistema di gestione della qualità"
+        "testo": "Barriere stradali di sicurezza, classifica "
       }
     ]
   },
