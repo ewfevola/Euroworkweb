@@ -255,4 +255,9 @@ fs.mkdirSync(OUT, { recursive: true });
 fs.writeFileSync(path.join(OUT, 'index.html'), html);
 fs.copyFileSync(path.join(ROOT, 'stile.css'), path.join(OUT, 'stile.css'));
 fs.cpSync(path.join(ROOT, 'img'), path.join(OUT, 'img'), { recursive: true });
-console.log('Sito (Cantiere) costruito in dist/');
+// sitemap.xml e robots.txt per Google
+const SITO = 'https://www.eurowork.it';
+fs.writeFileSync(path.join(OUT, 'robots.txt'), `User-agent: *\nAllow: /\nSitemap: ${SITO}/sitemap.xml\n`);
+const oggi = new Date().toISOString().slice(0, 10);
+fs.writeFileSync(path.join(OUT, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  <url>\n    <loc>${SITO}/</loc>\n    <lastmod>${oggi}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>1.0</priority>\n  </url>\n</urlset>\n`);
+console.log('Sito (Cantiere) costruito in dist/ (con sitemap.xml e robots.txt)');
