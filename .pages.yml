@@ -9,62 +9,144 @@ content:
     label: Contenuti del sito
     type: file
     path: eurowork-cms/contenuti/sito.json
+    description: Modifica le sezioni qui sotto e premi Save in alto. Il sito online si aggiorna da solo dopo circa un minuto.
     fields:
-      - name: apertura
-        label: Apertura (parte alta del sito)
-        type: object
-        fields:
-          - { name: etichetta, label: Etichetta piccola, type: string }
-          - { name: titolo, label: Titolo grande, type: string }
-          - { name: testo, label: Testo sotto il titolo, type: text }
-          - { name: foto, label: Foto grande, type: image }
-          - { name: descrizione_foto, label: Descrizione della foto (per chi non vede), type: string }
-          - { name: badge_alto_titolo, label: Riquadro in alto - titolo, type: string }
-          - { name: badge_alto_testo, label: Riquadro in alto - testo, type: string }
-          - { name: badge_basso_titolo, label: Riquadro in basso - titolo, type: string }
-          - { name: badge_basso_testo, label: Riquadro in basso - testo, type: string }
 
+      # ---------- 1. APERTURA ----------
+      - name: apertura
+        label: 1 · Apertura (cima del sito)
+        type: object
+        description: La prima schermata, con lo slideshow di foto e il titolo grande.
+        fields:
+          - { name: titolo, label: Titolo grande, type: string }
+          - { name: testo, label: Frase sotto il titolo, type: text }
+          - { name: etichetta, label: Etichetta piccola sopra il titolo, type: string }
+          - { name: foto, label: Prima foto dello slideshow, type: image, description: "Le altre foto dello slideshow sono prese in automatico da Lavori e Galleria." }
+          - { name: descrizione_foto, label: Descrizione della foto (per chi non vede e per Google), type: string }
+          - { name: badge_alto_titolo, label: Etichetta sulla foto (in alto) - titolo, type: string }
+          - { name: badge_alto_testo, label: Etichetta sulla foto (in alto) - testo, type: string }
+          - { name: badge_basso_titolo, label: Etichetta sulla foto (in basso) - titolo, type: string }
+          - { name: badge_basso_testo, label: Etichetta sulla foto (in basso) - testo, type: string }
+
+      # ---------- 2. CONTATTI ----------
+      - name: contatti
+        label: 2 · Contatti
+        type: object
+        description: Indirizzo, telefono, email e orari mostrati in fondo al sito.
+        fields:
+          - { name: indirizzo, label: Indirizzo (via e civico), type: string }
+          - { name: cap_citta, label: CAP e città, type: string }
+          - { name: telefono, label: Telefono, type: string }
+          - { name: cellulare, label: Cellulare, type: string }
+          - { name: email, label: Email, type: string }
+          - name: emails
+            label: Altre email (per reparto o persona)
+            type: object
+            list: true
+            description: Aggiungi altri indirizzi, ognuno con un'etichetta. Premi + per aggiungerne.
+            fields:
+              - { name: etichetta, label: Etichetta (es. Amministrazione), type: string }
+              - { name: indirizzo, label: Indirizzo email, type: string }
+          - { name: pec, label: PEC (lascia vuoto se non c'è), type: string }
+          - { name: orari, label: Orari, type: text, description: "Vai a capo per separare le righe. Lascia vuoto per nascondere gli orari." }
+          - { name: titolo_riquadro, label: Riquadro finale - titolo, type: string }
+          - { name: testo_riquadro, label: Riquadro finale - testo, type: text }
+
+      # ---------- 3. SOCIAL ----------
+      - name: social
+        label: 3 · Social (Facebook, Instagram, LinkedIn)
+        type: object
+        description: Incolla l'indirizzo completo delle vostre pagine. Lascia vuoto un campo per non mostrare quell'icona.
+        fields:
+          - { name: facebook, label: Facebook, type: string, description: "Es. https://www.facebook.com/nomepagina" }
+          - { name: instagram, label: Instagram, type: string, description: "Es. https://www.instagram.com/nomeprofilo" }
+          - { name: linkedin, label: LinkedIn, type: string, description: "Es. https://www.linkedin.com/company/nomeazienda" }
+
+      # ---------- 4. GALLERIA ----------
+      - name: galleria
+        label: 4 · Galleria foto (slideshow)
+        type: object
+        description: Le foto che scorrono nella sezione Galleria. Aggiungine o togline quante vuoi.
+        fields:
+          - { name: titolo, label: Titolo sezione, type: string }
+          - { name: testo, label: Testo sotto il titolo, type: text }
+          - { name: scorrimento_automatico, label: Scorrimento automatico, type: boolean }
+          - name: foto
+            label: Foto
+            type: object
+            list: true
+            description: Premi + per aggiungere una foto.
+            fields:
+              - { name: didascalia, label: Didascalia, type: string }
+              - { name: immagine, label: Foto, type: image }
+
+      # ---------- 5. LAVORI ----------
+      - name: lavori
+        label: 5 · Lavori (i 3 riquadri)
+        type: object
+        description: I tre riquadri con foto della sezione Lavori.
+        fields:
+          - { name: titolo, label: Titolo sezione, type: string }
+          - name: elenco
+            label: Riquadri
+            type: object
+            list: true
+            fields:
+              - { name: titolo, label: Scritta sotto la foto, type: string }
+              - { name: foto, label: Foto, type: image }
+              - name: inquadratura
+                label: Parte della foto da mostrare
+                type: select
+                options:
+                  values: [alto, centro, basso]
+
+      # ---------- 6. NUMERI ----------
       - name: numeri
-        label: Numeri sotto l'apertura
+        label: 6 · Numeri in evidenza
         type: object
         list: true
+        description: I quattro dati grandi sotto l'apertura (anno, km, ecc.).
         fields:
           - { name: valore, label: Numero o parola grande, type: string }
-          - { name: descrizione, label: Descrizione, type: string }
+          - { name: descrizione, label: Descrizione sotto, type: string }
 
+      # ---------- 7. SERVIZI ----------
       - name: servizi
-        label: Servizi
+        label: 7 · Servizi
         type: object
+        description: L'elenco dei servizi e le tendine con gli altri lavori.
         fields:
           - { name: titolo, label: Titolo sezione, type: string }
           - { name: testo, label: Testo introduttivo, type: text }
           - name: elenco
-            label: Riquadri dei servizi
+            label: Servizi principali
             type: object
             list: true
             fields:
+              - { name: titolo, label: Titolo, type: string }
+              - { name: testo, label: Testo, type: text }
               - name: icona
                 label: Icona
                 type: select
                 options:
                   values: [barriere, segnaletica, fotovoltaico, antirumore, strade, guardiania, edilizia, mezzi]
-              - { name: titolo, label: Titolo, type: string }
-              - { name: testo, label: Testo, type: text }
-              - { name: in_evidenza, label: Riquadro rosso in evidenza, type: boolean }
+              - { name: in_evidenza, label: Riquadro in evidenza (in rosso), type: boolean }
           - name: altri
-            label: Altri servizi (tendine)
+            label: Altri servizi (tendine a scomparsa)
             type: object
             list: true
             fields:
               - { name: titolo, label: Titolo tendina, type: string }
-              - { name: voci, label: Voci, type: string, list: true }
+              - { name: voci, label: Voci dell'elenco, type: string, list: true }
 
+      # ---------- 8. CHI SIAMO ----------
       - name: chi_siamo
-        label: Chi siamo
+        label: 8 · Chi siamo
         type: object
+        description: Testo di presentazione, persone e tappe della storia.
         fields:
           - { name: titolo, label: Titolo, type: string }
-          - { name: paragrafi, label: Paragrafi, type: text, list: true }
+          - { name: paragrafi, label: Paragrafi di testo, type: text, list: true }
           - name: persone
             label: Persone
             type: object
@@ -77,15 +159,17 @@ content:
             type: object
             list: true
             fields:
-              - { name: sigla, label: Sigla nel cerchio (es. '13), type: string }
               - { name: anno, label: Anno, type: string }
               - { name: titolo, label: Titolo, type: string }
               - { name: testo, label: Testo, type: text }
-              - { name: in_evidenza, label: Tappa in rosso, type: boolean }
+              - { name: sigla, label: Sigla nel cerchio (es. '13), type: string }
+              - { name: in_evidenza, label: Tappa in evidenza (in rosso), type: boolean }
 
+      # ---------- 9. ESPERIENZA ----------
       - name: esperienza
-        label: Esperienza
+        label: 9 · Esperienza
         type: object
+        description: Committenti, riconoscimento e tratte stradali con le barre.
         fields:
           - { name: titolo, label: Titolo, type: string }
           - { name: testo, label: Testo, type: text }
@@ -102,42 +186,11 @@ content:
               - { name: valore, label: Km o sigla, type: string }
               - { name: barra, label: Lunghezza barra (0-100; 0 = nessuna barra), type: number }
 
-      - name: lavori
-        label: Lavori
-        type: object
-        fields:
-          - { name: titolo, label: Titolo sezione, type: string }
-          - name: elenco
-            label: Riquadri dei lavori
-            type: object
-            list: true
-            fields:
-              - { name: foto, label: Foto, type: image }
-              - { name: titolo, label: Scritta sotto la foto, type: string }
-              - name: inquadratura
-                label: Parte della foto da mostrare
-                type: select
-                options:
-                  values: [alto, centro, basso]
-
-      - name: galleria
-        label: Galleria (slideshow)
-        type: object
-        fields:
-          - { name: titolo, label: Titolo sezione, type: string }
-          - { name: testo, label: Testo sotto il titolo, type: text }
-          - { name: scorrimento_automatico, label: Scorrimento automatico, type: boolean }
-          - name: foto
-            label: Foto
-            type: object
-            list: true
-            fields:
-              - { name: immagine, label: Foto, type: image }
-              - { name: didascalia, label: Didascalia, type: string }
-
+      # ---------- 10. QUALIFICAZIONI ----------
       - name: qualificazioni
-        label: Qualificazioni
+        label: 10 · Qualificazioni
         type: object
+        description: Le certificazioni e le classifiche SOA.
         fields:
           - { name: titolo, label: Titolo sezione, type: string }
           - name: elenco
@@ -148,32 +201,21 @@ content:
               - { name: titolo, label: Nome (es. SOA OS12-A), type: string }
               - { name: testo, label: Descrizione, type: string }
 
-      - name: contatti
-        label: Contatti
+      # ---------- IMPOSTAZIONI (si modificano raramente) ----------
+      - name: seo
+        label: Impostazioni · Google (titolo e descrizione)
         type: object
+        description: Come appare il sito nei risultati di Google. Si modifica raramente.
         fields:
-          - { name: titolo_riquadro, label: Riquadro nero - titolo, type: string }
-          - { name: testo_riquadro, label: Riquadro nero - testo, type: text }
-          - { name: indirizzo, label: Indirizzo, type: string }
-          - { name: cap_citta, label: CAP e città, type: string }
-          - { name: telefono, label: Telefono, type: string }
-          - { name: cellulare, label: Cellulare, type: string }
-          - { name: email, label: Email, type: string }
-          - { name: pec, label: PEC (lascia vuoto se non c'è), type: string }
-          - { name: orari, label: Orari (lascia vuoto per nasconderli), type: text }
+          - { name: titolo, label: Titolo su Google, type: string }
+          - { name: descrizione, label: Descrizione su Google, type: text }
 
       - name: dati_societari
-        label: Dati societari (piè di pagina)
+        label: Impostazioni · Dati societari (piè di pagina)
         type: object
+        description: Dati legali mostrati in fondo al sito. Si modificano raramente.
         fields:
           - { name: ragione_sociale, label: Ragione sociale, type: string }
           - { name: piva_cf, label: P.IVA e C.F., type: string }
           - { name: rea, label: REA, type: string }
           - { name: camera_commercio, label: Camera di commercio, type: string }
-
-      - name: seo
-        label: Google (titolo e descrizione)
-        type: object
-        fields:
-          - { name: titolo, label: Titolo nella scheda e su Google, type: string }
-          - { name: descrizione, label: Descrizione su Google, type: text }
