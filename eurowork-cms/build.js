@@ -23,9 +23,23 @@ const inquadra = { alto: 'center 22%', centro: 'center', basso: 'center 78%' };
 const num = (t) => { const m = String(t ?? '').match(/^\s*([\d.,]+)(.*)$/); return m ? `${m[1]}<em>${esc(m[2].trim())}</em>` : esc(t); };
 
 const a = d.apertura || {}, sv = d.servizi || {}, cs = d.chi_siamo || {}, es = d.esperienza || {};
-const lv = d.lavori || {}, g = d.galleria || {}, q = d.qualificazioni || {}, c = d.contatti || {}, ds = d.dati_societari || {};
+const lv = d.lavori || {}, g = d.galleria || {}, q = d.qualificazioni || {}, c = d.contatti || {}, ds = d.dati_societari || {}, social = d.social || {};
 const fotoG = lista(g.foto).filter((f) => f && f.immagine);
 const heroImgs = [...new Set([a.foto, ...lista(lv.elenco).map((l)=>l.foto), ...fotoG.map((f)=>f.immagine)].filter(Boolean))].slice(0,5);
+
+const SVG_FB = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22 12a10 10 0 10-11.56 9.88v-6.99H7.9V12h2.54V9.8c0-2.5 1.49-3.89 3.77-3.89 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.78l-.44 2.89h-2.34v6.99A10 10 0 0022 12z"/></svg>';
+const SVG_IG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r="1.1" fill="currentColor" stroke="none"/></svg>';
+const SVG_LI = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.94 5a1.94 1.94 0 11-3.88 0 1.94 1.94 0 013.88 0zM3.4 8.6h3.1V21H3.4zM9.2 8.6h2.97v1.7h.04c.41-.78 1.42-1.6 2.93-1.6 3.13 0 3.71 2.06 3.71 4.74V21h-3.1v-5.33c0-1.27-.02-2.9-1.77-2.9-1.77 0-2.04 1.38-2.04 2.81V21H9.2z"/></svg>';
+const socialLink = (url, label, svg) => {
+  const u = String(url || '').trim();
+  if (!u) return '';
+  const href = /^https?:\/\//i.test(u) ? u : 'https://' + u;
+  return `<a href="${esc(href)}" target="_blank" rel="noopener noreferrer" aria-label="${label}">${svg}</a>`;
+};
+const socialRow = (cls) => {
+  const items = socialLink(social.facebook, 'Facebook', SVG_FB) + socialLink(social.instagram, 'Instagram', SVG_IG) + socialLink(social.linkedin, 'LinkedIn', SVG_LI);
+  return items ? `<div class="social${cls ? ' ' + cls : ''}">${items}</div>` : '';
+};
 
 const html = `<!doctype html>
 <html lang="it">
@@ -172,22 +186,28 @@ ${fotoG.length ? `<section id="galleria" class="sez galleria-sez">
       <h2>${esc(c.titolo_riquadro)}</h2>
       <p class="guida">${br(c.testo_riquadro)}</p>
       <div class="azioni">
-        ${c.email ? `<a class="btn" href="mailto:${esc(c.email)}?subject=Richiesta%20informazioni">Scrivici</a>` : ''}
+        ${(()=>{const em=c.email || (lista(c.emails).find((e)=>e && e.indirizzo)||{}).indirizzo; return em ? `<a class="btn" href="mailto:${esc(em)}?subject=Richiesta%20informazioni">Scrivici</a>` : '';})()}
         ${c.telefono ? `<a class="btn ghost" href="tel:${tel(c.telefono)}">Chiamaci</a>` : ''}
       </div>
     </div>
     <div class="contatti">
       <div class="contatto"><span class="mini">Sede legale</span><p>${esc(c.indirizzo)}<br>${esc(c.cap_citta)}</p></div>
       <div class="contatto"><span class="mini">Telefono e fax</span><p>${c.telefono ? `<a href="tel:${tel(c.telefono)}">${esc(c.telefono)}</a>` : ''}${c.cellulare ? `<br><a href="tel:${tel(c.cellulare)}">${esc(c.cellulare)}</a> (cell.)` : ''}</p></div>
-      <div class="contatto"><span class="mini">${c.pec ? 'Email e PEC' : 'Email'}</span><p>${c.email ? `<a href="mailto:${esc(c.email)}">${esc(c.email)}</a>` : ''}${c.pec ? `<br>${esc(c.pec)}` : ''}</p></div>
+      <div class="contatto"><span class="mini">Email</span><p>${[
+        c.email ? `<a href="mailto:${esc(c.email)}">${esc(c.email)}</a>` : '',
+        ...lista(c.emails).filter((e)=>e && e.indirizzo).map((e)=>`${e.etichetta ? `<span class="et">${esc(e.etichetta)}</span>` : ''}<a href="mailto:${esc(e.indirizzo)}">${esc(e.indirizzo)}</a>`),
+        c.pec ? `<span class="et">PEC</span>${esc(c.pec)}` : ''
+      ].filter(Boolean).join('<br>')}</p></div>
       ${c.orari ? `<div class="contatto"><span class="mini">Orari</span><p>${br(c.orari)}</p></div>` : ''}
     </div>
+    ${socialRow() ? `<div class="seguici"><span class="mini">Seguici</span>${socialRow()}</div>` : ''}
   </div>
 </section>
 </main>
 
 <footer>
   <div class="wrap">
+    ${socialRow()}
     <span>© <span id="anno"></span> ${esc(ds.ragione_sociale)} · P.IVA e C.F. ${esc(ds.piva_cf)} · REA ${esc(ds.rea)} · ${esc(ds.camera_commercio)}</span>
   </div>
 </footer>

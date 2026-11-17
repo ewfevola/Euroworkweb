@@ -177,8 +177,8 @@ header.su .nav .logo img{height:36px}
 .puntini button[aria-current="true"]{width:26px;background:var(--rosso)}
 
 /* Qualificazioni */
-.qual{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--hair)}
-.q{padding:28px 24px 28px 0;border-right:1px solid var(--hair2)}
+.qual{display:flex;flex-wrap:wrap;gap:0;border-top:1px solid var(--hair)}
+.q{flex:1 1 230px;max-width:340px;padding:30px 28px 30px 0;border-right:1px solid var(--hair2)}
 .q:last-child{border-right:0}
 .q b{display:block;font-family:Fraunces,serif;font-size:1.4rem;margin-bottom:8px}
 .q span{font-size:.9rem;color:var(--muted)}
@@ -225,3 +225,16 @@ footer span{font-size:.84rem;color:#9d9a94}
   .qual,.contatti{grid-template-columns:1fr}
   .slide{aspect-ratio:4/5}
 }
+
+/* Social */
+.social{display:flex;gap:12px;align-items:center}
+.social a{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;border:1px solid var(--hair);color:var(--fg);transition:background .2s,border-color .2s,color .2s,transform .2s}
+.social a:hover{background:var(--rosso);border-color:var(--rosso);color:#fff;transform:translateY(-2px)}
+.social svg{width:19px;height:19px;display:block}
+.seguici{margin-top:44px;display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+footer .wrap{align-items:center}
+@media(max-width:560px){footer .wrap{flex-direction:column-reverse;align-items:flex-start;gap:22px}}
+
+/* Email multiple nei contatti */
+.contatto .et{display:block;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:8px}
+.contatto p a{display:inline-block}
